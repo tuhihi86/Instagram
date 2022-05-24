@@ -35,6 +35,8 @@ const Post = ({ post }) => {
                 <PostFooter />
                 <Likes post={post} />
                 <Caption post={post} />
+                <CommentsSection post={post} />
+                <Comments post={post} />
             </View>
         </View>
     )
@@ -84,17 +86,39 @@ const Likes = ({ post }) => (
         <Text style={{ color: 'white', fontWeight: "600" }}>{post.likes.toLocaleString('en')} likes</Text>
     </View>
 )
- 
+
 const Caption = ({ post }) => (
-    <View style={{marginTop:5}}>
-            <Text style={{color:'white', fontWeight: "600" }}>{post.user}:</Text>
-            <Text style={{color:'white', marginLeft:5}}>{post.caption}</Text>
+    <View style={{ marginTop: 5 }}>
+        <Text style={{ color: 'white' }}>
+            <Text style={{ fontWeight: "600" }}>{post.user}:</Text>
+            <Text style={{ marginLeft: 5 }}>{post.caption}</Text>
+        </Text>
     </View>
 )
 
-const CommentsSection = ({post}) => ({
-    
-})
+const CommentsSection = ({ post }) => (
+    <View style={{ marginTop: 5 }}>
+        {!!post.comments.length && (
+            <Text style={{ color: 'gray' }}>
+                View{post.comments.length > 1 ? ' all' : ''} {post.comments.length} {' '}
+                {post.comments.length > 1 ? 'comments' : 'comment'}
+            </Text>
+        )}
+    </View>
+)
+
+const Comments = ({ post }) => (
+    <>
+        {post.comments.map((comment, index) => (
+            <View key={index} style={{flexDirection:'row', marginTop:5}}>
+                <Text style={{ color: 'white' }}>
+                    <Text style={{ fontWeight: "600" }}>{comment.user}</Text>
+                    {': '} {comment.comment}
+                </Text>
+            </View>
+        ))}
+    </>
+)
 
 const styles = StyleSheet.create({
     container: {
