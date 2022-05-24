@@ -7,7 +7,7 @@ import { Divider } from 'react-native-elements'
 const PLACEHOLDER_IMG = 'https://www.jamiemaison.com/creating-a-simple-text-editor/placeholder.png'
 
 const uploadPostSchema = Yup.object().shape({
-    imageurl: Yup.string().url().required('A URL is required'),
+    imageUrl: Yup.string().url().required('A URL is required'),
     caption: Yup.string().max(2200, 'Caption has reached the character limit.')
 })
 
