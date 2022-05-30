@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { View, Text, TextInput, Image, Button } from 'react-native'
 import * as Yup from 'yup'
 import { Formik } from 'formik'
@@ -13,16 +13,21 @@ const uploadPostSchema = Yup.object().shape({
 
 const FormikPostUpload = () => {
     const [thumbnailUrl, setThumbnaulUrl] = useState(PLACEHOLDER_IMG)
+    useEffect(()=>{
+        console.log(thumbnailUrl)
+    },[thumbnailUrl])
     return (
         <Formik initialValues={{ caption: '', imageUrl: '' }}
             onSubmit={(values) => console.log(values)}
             validationSchema={uploadPostSchema}
             validateOnMount={true}
-            >
+        >
             {({ handleBlur, handleChange, handleSubmit, values, errors, isValid }) => (
                 <>
                     <View style={{ margin: 20, justifyContent: 'space-between', flexDirection: 'row' }}>
-                        <Image style={{ width: 100, height: 100 }} source={{ uri: PLACEHOLDER_IMG }} />
+                        <Image
+                            style={{ width: 100, height: 100 }}
+                            source={{ uri: thumbnailUrl ? thumbnailUrl : PLACEHOLDER_IMG }} />
                         <View style={{ flex: 1, marginLeft: 12 }}>
                             <TextInput
                                 style={{ color: 'white', fontSize: 20 }}
@@ -36,10 +41,12 @@ const FormikPostUpload = () => {
                     </View>
                     <Divider width={0.2} orientation='vertical' />
                     <TextInput
+                        onChange={e => setThumbnaulUrl(e.nativeEvent.text)}
                         style={{ color: 'white', fontSize: 18 }}
                         placeholder='Enter image URL'
                         placeholderTextColor='gray'
-                        onChangeText={handleChange('imageUrl')}
+                         onChangeText={(handleChange('imageUrl'))
+                        }
                         onBlur={handleBlur('imageUrl')}
                         value={values.imageUrl} />
                     {errors.imageUrl && (
@@ -47,7 +54,7 @@ const FormikPostUpload = () => {
                             {errors.imageUrl}
                         </Text>
                     )}
-                    <Button onPress={handleSubmit} title='Share' disabled={!isValid}/>
+                    <Button onPress={handleSubmit} title='Share' disabled={!isValid} />
                 </>
             )}
         </Formik>
