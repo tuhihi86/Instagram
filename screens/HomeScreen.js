@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'black',
     flex: 1,
-    marginTop:20
+    marginTop:25
   }
 })
 
